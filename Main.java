@@ -21,37 +21,42 @@
 
 class Main {
   public static void main(String[] args) {
+    if (args.length != 3) {
+      System.err.println("Erreur : Il faut 3 arguments : <int1> <int2> <op>");
+      System.exit(1);
+    }
+
+    int a = 0, b = 0;
     try {
-      // Vérification de la présence suffisante d'arguments
-      if (args.length < 3) {
-        System.out.println("Erreur : Il manque des arguments. Syntaxe : java Main <int1> <int2> <op>");
-        System.exit(-1);
-      }
-
-      // Parsing des deux premiers arguments
-      int a = Integer.parseInt(args[0]);
-      int b = Integer.parseInt(args[1]);
-      String op = args[args.length - 1];
-
-      if (op.equals("+")) {
-        System.out.println(a + b);
-      } else if (op.equals("-")) {
-        System.out.println(a - b);
-      } else if (op.equals("*")) {
-        System.out.println(a * b);
-      } else if (op.equals("/")) {
-        if (b != 0) {
-          System.out.println(a / b);
-        } else {
-          System.out.println("Division par zéro interdite");
-        }
-      } else {
-        System.out.println("Erreur : Opérateur non reconnu");
-        System.exit(-1);
-      }
+      a = Integer.parseInt(args[0]);
+      b = Integer.parseInt(args[1]);
     } catch (NumberFormatException e) {
-      System.out.println("Erreur : Les deux premiers arguments doivent être des entiers valides");
-      System.exit(-1);
+      System.err.println("Erreur : Les deux premiers arguments doivent être des entiers valides");
+      System.exit(1);
+    }
+
+    String op = args[2];
+
+    switch(op) {
+      case "+":
+        System.out.println(a + b);
+        break;
+      case "-":
+        System.out.println(a - b);
+        break;
+      case "*":
+        System.out.println(a * b);
+        break;
+      case "/":
+        if (b == 0) {
+          System.out.println("Division par zéro interdite");
+        } else {
+          System.out.println(a / b);
+        }
+        break;
+      default:
+        System.err.println("Erreur : Opérateur non reconnu");
+        System.exit(1);
     }
   }
 }
